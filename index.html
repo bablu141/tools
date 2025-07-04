@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi Tool Hub - All-in-One Tools Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --bg-dark: #1E1E2F;
+            --header-bg: #2B2D42;
+            --text-light: #EAEAEA;
+            --accent-gold: #FFD700;
+            --accent-gold-hover: #E6C200;
+            --card-bg: #3A3D5B;
+            --card-hover: #FFD700;
+            --shadow: rgba(255, 215, 0, 0.2);
+            --search-bg: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.05;
+        }
+
+        .shape:nth-child(1) {
+            background: var(--accent-gold);
+            width: 600px;
+            height: 600px;
+            top: -200px;
+            left: -200px;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .shape:nth-child(2) {
+            background: var(--text-light);
+            width: 400px;
+            height: 400px;
+            bottom: -150px;
+            right: -150px;
+            animation: float 18s infinite ease-in-out;
+            animation-delay: 2s;
+        }
+
+        .shape:nth-child(3) {
+            background: var(--accent-gold);
+            width: 300px;
+            height: 300px;
+            top: 40%;
+            right: 10%;
+            animation: float 12s infinite ease-in-out;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(20px, 30px) rotate(5deg);
+            }
+            50% {
+                transform: translate(-30px, 20px) rotate(-5deg);
+            }
+            75% {
+                transform: translate(10px, -20px) rotate(3deg);
+            }
+        }
+
+        /* Header styling */
+        header {
+            background-color: var(--header-bg);
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--accent-gold);
+            font-size: 2rem;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-light);
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--accent-gold);
+        }
+
+        /* Search bar */
+        .search-container {
+            flex: 1;
+            max-width: 500px;
+            min-width: 200px;
+            position: relative;
+            margin: 0 1rem;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 3rem;
+            border-radius: 50px;
+            border: none;
+            background-color: var(--search-bg);
+            color: var(--text-light);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .search-bar:focus {
+            box-shadow: 0 0 0 2px var(--accent-gold);
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-gold);
+        }
+
+        /* Auth buttons */
+        .auth-buttons {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .auth-btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid var(--accent-gold);
+            background: transparent;
+            color: var(--accent-gold);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .auth-btn:hover {
+            background-color: var(--accent-gold);
+            color: var(--bg-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+        }
+
+        .auth-btn.signin {
+            background-color: var(--accent-gold);
+            color: var(--bg-dark);
+        }
+
+        .auth-btn.signin:hover {
+            background-color: var(--accent-gold-hover);
+        }
+
+        /* Hero section */
+        .hero {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--text-light), var(--accent-gold));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+
+        /* Tool grid */
+        .tools-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .tool-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .tool-card:hover {
+            background-color: var(--card-hover);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px var(--shadow);
+        }
+
+        .tool-card:hover .tool-title,
+        .tool-card:hover .tool-desc {
+            color: var(--bg-dark);
+        }
+
+        .tool-card:hover .tool-icon {
+            background-color: var(--bg-dark);
+            color: var(--accent-gold);
+        }
+
+        .tool-card:hover .btn {
+            background-color: var(--bg-dark);
+            color: var(--accent-gold);
+        }
+
+        .tool-icon {
+            width: 70px;
+            height: 70px;
+            background-color: var(--accent-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: var(--bg-dark);
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .tool-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            color: var(--accent-gold);
+        }
+
+        .tool-desc {
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+            opacity: 0.85;
+        }
+
+        .btn {
+            background-color: var(--accent-gold);
+            color: var(--bg-dark);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: fit-content;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:hover {
+            background-color: var(--accent-gold-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+        }
+
+        .btn i {
+            font-size: 1rem;
+        }
+
+        /* Popular tools section */
+        .popular-tools {
+            max-width: 1200px;
+            margin: 3rem auto 0;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+            color: var(--accent-gold);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--accent-gold);
+            border-radius: 2px;
+        }
+
+        .tools-scroll {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-gold) transparent;
+        }
+
+        .tools-scroll::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .tools-scroll::-webkit-scrollbar-thumb {
+            background-color: var(--accent-gold);
+            border-radius: 3px;
+        }
+
+        .tools-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .tool-chip {
+            background-color: var(--card-bg);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tool-chip:hover {
+            background-color: var(--accent-gold);
+            color: var(--bg-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .tool-chip i {
+            color: var(--accent-gold);
+        }
+
+        .tool-chip:hover i {
+            color: var(--bg-dark);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--header-bg);
+            padding: 3rem 2rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--accent-gold);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--card-bg);
+            color: var(--accent-gold);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background-color: var(--accent-gold);
+            color: var(--bg-dark);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            opacity: 0.7;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-container {
+                margin: 0.5rem 0;
+                max-width: 100%;
+            }
+            
+            .auth-buttons {
+                justify-content: center;
+            }
+            
+            .hero h2 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .tools-grid {
+                padding: 1rem;
+                gap: 1.5rem;
+            }
+            
+            .tool-card {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Animation for cards */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tool-card {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .tool-card:nth-child(1) { animation-delay: 0.1s; }
+        .tool-card:nth-child(2) { animation-delay: 0.2s; }
+        .tool-card:nth-child(3) { animation-delay: 0.3s; }
+        .tool-card:nth-child(4) { animation-delay: 0.4s; }
+        .tool-card:nth-child(5) { animation-delay: 0.5s; }
+        .tool-card:nth-child(6) { animation-delay: 0.6s; }
+        .tool-card:nth-child(7) { animation-delay: 0.7s; }
+        .tool-card:nth-child(8) { animation-delay: 0.8s; }
+        
+        /* Modal styling */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: var(--header-bg);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 450px;
+            padding: 2.5rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            position: relative;
+            animation: modalAppear 0.4s ease;
+        }
+        
+        @keyframes modalAppear {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--accent-gold);
+            transition: all 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            transform: rotate(90deg);
+            color: var(--accent-gold-hover);
+        }
+        
+        .modal h2 {
+            color: var(--accent-gold);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: rgba(0, 0, 0, 0.2);
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
+        }
+        
+        .modal-btn {
+            width: 100%;
+            padding: 0.9rem;
+            background-color: var(--accent-gold);
+            color: var(--bg-dark);
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+        }
+        
+        .modal-btn:hover {
+            background-color: var(--accent-gold-hover);
+        }
+        
+        .modal-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+        
+        .modal-footer a {
+            color: var(--accent-gold);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .modal-footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated background -->
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-tools"></i>
+                <h1>Multi Tool <span>Hub</span></h1>
+            </div>
+            
+            <!-- Search Bar -->
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-bar" placeholder="Search tools...">
+            </div>
+            
+            <!-- Auth Buttons -->
+            <div class="auth-buttons">
+                <button class="auth-btn signin" id="signinBtn">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </button>
+                <button class="auth-btn" id="signupBtn">
+                    <i class="fas fa-user-plus"></i> Sign Up
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h2>All Your Essential Tools in One Place</h2>
+        <p>Multi Tool Hub offers a comprehensive suite of free online utilities to simplify your digital tasks. No downloads, no installations - just powerful tools at your fingertips.</p>
+    </section>
+    
+    <!-- Popular Tools Section -->
+    <section class="popular-tools">
+        <h3 class="section-title">Popular Tools</h3>
+        <div class="tools-scroll">
+            <div class="tool-chip">
+                <i class="fas fa-file-pdf"></i> PDF to Word
+            </div>
+            <div class="tool-chip">
+                <i class="fas fa-image"></i> Image Compressor
+            </div>
+            <div class="tool-chip">
+                <i class="fas fa-compress-arrows-alt"></i> File Compressor
+            </div>
+            <div class="tool-chip">
+                <i class="fas fa-lock"></i> Password Generator
+            </div>
+            <div class="tool-chip">
+                <i class="fas fa-qrcode"></i> QR Generator
+            </div>
+            <div class="tool-chip">
+                <i class="fas fa-palette"></i> Color Picker
+            </div>
+            <div class="tool-chip">
+                <i class="fas fa-font"></i> Font Identifier
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools Grid -->
+    <section class="tools-grid">
+        <!-- Image Tools -->
+        <div class="tool-card">
+            <div class="tool-icon">
+                <i class="fas fa-exchange-alt"></i>
+            </div>
+            <h3 class="tool-title">Image Converter</h3>
+            <p class="tool-desc">Convert your images between various formats like JPG, PNG, WEBP, and more with just a few clicks.</p>
+            <button class="btn" onclick="redirectToTool('Image Converter')">
+                <i class="fas fa-external-link-alt"></i> Use Tool
+            </button>
+        </div>
+
+        <div class="tool-card">
+            <div class="tool-icon">
+                <i class="fas fa-compress-alt"></i>
+            </div>
+            <h3 class="tool-title">Image Compressor</h3>
+            <p class="tool-desc">Reduce image file size without compromising quality. Perfect for optimizing website images.</p>
+            <button class="btn" onclick="redirectToTool('Image Compressor')">
+                <i class="fas fa-external-link-alt"></i> Use Tool
+            </button>
+        </div>
+
+        <div class="tool-card">
+            <div class="tool-icon">
+                <i class="fas fa-crop-alt"></i>
+            </div>
+            <h3 class="tool-title">Image Crop</h3>
+            <p class="tool-desc">Precisely crop your images to any dimensions. Remove unwanted areas with pixel-perfect accuracy.</p>
+            <button class="btn" onclick="redirectToTool('Image Crop')">
+                <i class="fas fa-external-link-alt"></i> Use Tool
+            </button>
+        </div>
+
+        <div class="tool-card">
+            <div class="tool-icon">
+                <i class="fas fa-file-video"></i>
+            </div>
+            <h3 class="tool-title">Video Converter</h3>
+            <p class="tool-desc">Convert videos between MP4, AVI, MOV, MKV, and other popular formats with high quality.</p>
+            <button class="btn" onclick="redirectToTool('Video Converter')">
+                <i class="fas fa-external-link-alt"></i> Use Tool
+            </button>
+        </div>
+
+        <!-- Calculation Tools -->
+        <div class="tool-card">
+            <div class="tool-icon">
+                <i class="fas fa-birthday-cake"></i>
+            </div>
+            <h3 class="tool-title">Age Calculator</h3>
+            <p class="tool-desc">Calculate exact age in years, months, weeks, and days. Perfect for birthday reminders and planning.</p>
+            <button class="btn" onclick="redirectToTool('Age Calculator')">
+                <i class="fas fa-external-link-alt"></i> Use Tool
+            </button>
+        </div>
+
+        <div class="tool-card">
+            <div class="tool-icon">
+                <i class="fas fa-calculator"></i>
+            </div>
+            <h3 class="tool-title">EMI Calculator</h3>
+            <p class="tool-desc">Calculate Equated Monthly Installments for loans with adjustable interest rates and tenure periods.</p>
+            <button class="btn" onclick="redirectToTool('EMI Calculator')">
+                <i class="fas fa-external-link-alt"></i> Use Tool
+            </button>
+        </div>
+
+        <div class="tool-card">
+            <div class="tool-icon">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <h3 class="tool-title">SIP Calculator</h3>
+            <p class="tool-desc">Plan your investments with our Systematic Investment Plan calculator. Visualize your wealth growth.</p>
+            <button class="btn" onclick="redirectToTool('SIP Calculator')">
+                <i class="fas fa-external-link-alt"></i> Use Tool
+            </button>
+        </div>
+
+        <!-- Audio Tool -->
+        <div class="tool-card">
+            <div class="tool-icon">
+                <i class="fas fa-music"></i>
+            </div>
+            <h3 class="tool-title">Audio Trim</h3>
+            <p class="tool-desc">Trim your audio files to the perfect length. Create ringtones or edit podcasts with ease.</p>
+            <button class="btn" onclick="redirectToTool('Audio Trim')">
+                <i class="fas fa-external-link-alt"></i> Use Tool
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">Multi Tool Hub</div>
+            <div class="footer-links">
+                <a href="#">Home</a>
+                <a href="#">About</a>
+                <a href="#">Tools</a>
+                <a href="#">Pricing</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact</a>
+            </div>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+            </div>
+            <div class="copyright">
+                &copy; 2023 Multi Tool Hub. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Sign In Modal -->
+    <div class="modal" id="signinModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeSignin">&times;</span>
+            <h2>Sign In</h2>
+            <form id="signinForm">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="modal-btn">Sign In</button>
+            </form>
+            <div class="modal-footer">
+                <p>Don't have an account? <a href="#" id="signupLink">Sign Up</a></p>
+                <p><a href="#">Forgot your password?</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sign Up Modal -->
+    <div class="modal" id="signupModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeSignup">&times;</span>
+            <h2>Create Account</h2>
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="fullname">Full Name</label>
+                    <input type="text" id="fullname" required>
+                </div>
+                <div class="form-group">
+                    <label for="new-email">Email Address</label>
+                    <input type="email" id="new-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="new-password">Password</label>
+                    <input type="password" id="new-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" required>
+                </div>
+                <button type="submit" class="modal-btn">Create Account</button>
+            </form>
+            <div class="modal-footer">
+                <p>Already have an account? <a href="#" id="signinLink">Sign In</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tool redirect function
+        function redirectToTool(toolName) {
+            alert(`Redirecting to ${toolName} tool...`);
+            // In a real implementation, this would redirect to the actual tool page
+            // window.location.href = `tool-${toolName.toLowerCase().replace(' ', '-')}.html`;
+        }
+
+        // Animation for hero section
+        document.addEventListener('DOMContentLoaded', function() {
+            const hero = document.querySelector('.hero');
+            hero.style.opacity = '0';
+            hero.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                hero.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                hero.style.opacity = '1';
+                hero.style.transform = 'translateY(0)';
+            }, 300);
+        });
+
+        // Modal functionality
+        const signinModal = document.getElementById('signinModal');
+        const signupModal = document.getElementById('signupModal');
+        const signinBtn = document.getElementById('signinBtn');
+        const signupBtn = document.getElementById('signupBtn');
+        const closeSignin = document.getElementById('closeSignin');
+        const closeSignup = document.getElementById('closeSignup');
+        const signinLink = document.getElementById('signinLink');
+        const signupLink = document.getElementById('signupLink');
+
+        // Open sign in modal
+        signinBtn.addEventListener('click', () => {
+            signinModal.style.display = 'flex';
+        });
+
+        // Open sign up modal
+        signupBtn.addEventListener('click', () => {
+            signupModal.style.display = 'flex';
+        });
+
+        // Close modals
+        closeSignin.addEventListener('click', () => {
+            signinModal.style.display = 'none';
+        });
+
+        closeSignup.addEventListener('click', () => {
+            signupModal.style.display = 'none';
+        });
+
+        // Switch between modals
+        signupLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            signinModal.style.display = 'none';
+            signupModal.style.display = 'flex';
+        });
+
+        signinLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            signupModal.style.display = 'none';
+            signinModal.style.display = 'flex';
+        });
+
+        // Close modals when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === signinModal) {
+                signinModal.style.display = 'none';
+            }
+            if (e.target === signupModal) {
+                signupModal.style.display = 'none';
+            }
+        });
+
+        // Form submission handling
+        document.getElementById('signinForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Sign in functionality would be implemented here!');
+            signinModal.style.display = 'none';
+        });
+
+        document.getElementById('signupForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Account creation functionality would be implemented here!');
+            signupModal.style.display = 'none';
+        });
+
+        // Search functionality
+        const searchBar = document.querySelector('.search-bar');
+        const toolCards = document.querySelectorAll('.tool-card');
+        const toolChips = document.querySelectorAll('.tool-chip');
+
+        searchBar.addEventListener('input', () => {
+            const searchTerm = searchBar.value.toLowerCase();
+            
+            // Search in tool cards
+            toolCards.forEach(card => {
+                const title = card.querySelector('.tool-title').textContent.toLowerCase();
+                const desc = card.querySelector('.tool-desc').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) {
+                    card.style.display = 'flex';
+                } else if (desc.includes(searchTerm)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Search in popular tools
+            toolChips.forEach(chip => {
+                const text = chip.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    chip.style.display = 'flex';
+                } else {
+                    chip.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
