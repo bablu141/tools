@@ -64,6 +64,9 @@
         <button onclick="convertImage()">Convert Image</button>
         <p id="status"></p>
         <div class="preview" id="previewContainer"></div>
+        <a id="downloadBtn" style="display: none;" download>
+            <button>Download Converted Image</button>
+        </a>
     </div>
 
     <script>
@@ -72,6 +75,7 @@
             const format = document.getElementById('formatSelect').value;
             const status = document.getElementById('status');
             const previewContainer = document.getElementById('previewContainer');
+            const downloadBtn = document.getElementById('downloadBtn');
 
             if (!fileInput.files.length) {
                 alert('Please upload an image first.');
@@ -92,20 +96,13 @@
                     canvas.height = img.height;
                     ctx.drawImage(img, 0, 0);
                     
-                    const convertedImage = canvas.toDataURL(image/${format});
-                    previewContainer.innerHTML = <img src="${convertedImage}" style="max-width: 100%; border-radius: 5px; margin-top: 10px;">;
-                    const downloadBtn = document.createElement('a');
+                    const convertedImage = canvas.toDataURL(`image/${format}`);
+                    previewContainer.innerHTML = `<img src="${convertedImage}" style="max-width: 100%; border-radius: 5px; margin-top: 10px;">`;
+                    
                     downloadBtn.href = convertedImage;
-                    downloadBtn.download = converted_image.${format};
-                    downloadBtn.textContent = 'Download Image';
+                    downloadBtn.download = `converted_image.${format}`;
                     downloadBtn.style.display = 'block';
-                    downloadBtn.style.background = '#FFD700';
-                    downloadBtn.style.color = '#1E1E2F';
-                    downloadBtn.style.padding = '10px';
-                    downloadBtn.style.marginTop = '10px';
-                    downloadBtn.style.textDecoration = 'none';
-                    downloadBtn.style.borderRadius = '5px';
-                    previewContainer.appendChild(downloadBtn);
+
                     status.textContent = '';
                 };
             };
